@@ -68,6 +68,7 @@ _GTKWave waveform, marker at 75 ns: sel transitions to 1 and y switches to track
 
 
 _GTKWave waveform, marker at 225 ns: y = i1 continues to hold while sel remains 1._
+![alt text](Screenshot_2026-08-09_11-54-12.png)
 
 ## 4\. Multiplexer Design Explanation
 
@@ -156,6 +157,7 @@ This command generates a Graphviz representation of the current design and opens
 
 _Yosys show output: the generic \$mux cell driven by i0, i1, and sel, prior to final technology mapping._
 
+![alt text](muxlogic.png)
 ### Step 5 - Technology Mapping Using ABC
 
 abc -liberty ../lib/sky130_fd_sc_hd_\_tt_025C_1v80.lib
@@ -178,6 +180,7 @@ The synthesized design was visualized as a gate-level netlist. The netlist repre
 
 
 _good_mux_netlist.v mapped to a single sky130_fd_sc_hd_\_mux2_1 cell, alongside its Yosys schematic._
+![alt text](goodmuxnetlistfile-1.png)
 
 ## 7\. Observation
 
