@@ -54,7 +54,7 @@ assign y = a ? b : 1'b0;
 
 endmodule
 ```
-
+![alt text](image.png)
 `a ? b : 1'b0` is equivalent to `y = a & b`. The synthesized schematic below confirms this: a single `sky130_fd_sc_hd__and2_0` cell with `a` and `b` feeding it directly.
 
 ### Example 2 — Hardwired Constant Optimization (`opt_check2`)
@@ -70,6 +70,7 @@ assign y = a ? 1'b1 : b;
 
 endmodule
 ```
+![alt text](image-1.png)
 
 `a ? 1'b1 : b` is equivalent to `y = a | b`. The schematic shows exactly that: a single `sky130_fd_sc_hd__or2_0` cell.
 
@@ -87,7 +88,7 @@ assign y = a ? (c ? 1'b1 : b) : 1'b0;
 
 endmodule
 ```
-
+![alt text](image-2.png)
 The nested conditional was expected to reduce to `y = a & (c | b)`. What Yosys actually produced for this design was a single three-input `sky130_fd_sc_hd__and3_1` cell driven directly by `a`, `b`, and `c` — a further logic-minimization step beyond the OR/AND split, collapsing the whole expression into one gate.
 
 ### Example 4 — Multi-bit Logic Optimization (`opt_check4`)
@@ -130,9 +131,9 @@ end
 
 endmodule
 ```
-
+![alt text](image-3.png)
 Because `q` depends on `reset`, the flip-flop cannot be replaced by a constant — a real sequential cell is required. The waveform confirms `q` stays at 0 while `reset = 1`, as expected.
-
+![alt text](image-5.png)
 ### Example 2 — Flip-Flop Permanently Tied to a Constant (`dff_const2`)
 
 ```verilog
@@ -152,9 +153,9 @@ end
 
 endmodule
 ```
-
+![alt text](image-4.png)
 Both branches assign `1`, so `q` is always `1` regardless of `reset`. The waveform shows exactly that: `q = 1` holds continuously even while `reset` toggles.
-
+![alt text](image-6.png)
 ### Example 3 — Multi-Flop Constant Chain (`dff_const3`)
 
 ```verilog
@@ -180,9 +181,9 @@ end
 
 endmodule
 ```
-
+![alt text](image-7.png)
 The waveform shows the one-cycle propagation delay this design is meant to demonstrate: `q1` rises to 1 first, and `q` follows one clock cycle later, tracking `q1`'s previous value.
-
+![alt text](image-8.png)
 ---
 
 ## 5. Sequential Optimization for Unused Outputs (`counter_opt`)
@@ -208,7 +209,7 @@ end
 
 endmodule
 ```
-
+![alt text](image-10.png)
 The captured schematic shows the full, non-reduced counter_opt structure: three `$_DFF_PP0_` flip-flops (one per count bit) built from NOR, AND2, NAND2, NAND3, and a clock-inverter gate, with `q` tapped from bit 0 through a buffer. This view captures the counter *before* the unused-bit optimization is applied — useful as a "before" reference to compare against the reduced single-flip-flop version once `count[1]` and `count[2]` are trimmed away as unobservable.
-
+![alt text](image-9.png)
 ---
