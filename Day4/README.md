@@ -53,299 +53,218 @@ Gate-Level Simulation
      ↓
 Waveform Comparison
 ```
+## 1. GLS (Gate Level Simulation) – Concepts
 
-## 2. RTL Simulation vs Gate-Level Simulation
+**Gate Level Simulation (GLS)** is the process of running the testbench not
+against the RTL (behavioral) design, but against the **synthesized gate-level
+netlist**, using the same testbench.
 
-### RTL Simulation
+Why GLS is done:
 
-RTL simulation executes the original Verilog code.
+- To verify that the **logical correctness** of the design is preserved after
+  synthesis (netlist behaves the same as RTL).
+- To verify **timing** of the design (only possible if the simulation is run
+  with delay annotation, e.g., SDF).
+- Netlist is logically equivalent to RTL, so the **same testbench** can be
+  reused for both RTL simulation and GLS.
 
-It includes constructs such as:
-
-- `always`
-- `if`
-- `case`
-- Blocking assignments
-- Non-blocking assignments
-- Continuous assignments
-
-### Gate-Level Simulation
-
-Gate-Level Simulation executes the synthesized netlist containing gates and standard-cell models.
-
-### Main Difference
-
-RTL simulation verifies the behavior of the RTL description, while GLS verifies the behavior of the synthesized hardware structure.
-
-## 3. Incomplete Sensitivity List
-
-Consider the following RTL:
-
-```verilog
-module ternary_operator_mux (
-    input i0,
-    input i1,
-    input sel,
-    output reg y
-);
-
-always @(sel) begin
-    if (sel)
-        y = i1;
-    else
-        y = i0;
-end
-
-endmodule
-```
-
-The intended functionality is:
-
-- `sel = 0` → `y = i0`
-- `sel = 1` → `y = i1`
-
-However, the sensitivity list contains only:
-
-```
-@(sel)
-```
-
-The inputs `i0` and `i1` are missing.
-
-### Problem
-
-The always block executes only when `sel` changes.
-
-If `i0` changes while `sel` remains unchanged:
-
-```
-i0 changes
-     ↓
-sel does not change
-     ↓
-always block is not triggered
-     ↓
-y does not update
-```
-
-This can cause incorrect RTL simulation behavior.
-
-### Correct Sensitivity List
-
-Traditional Verilog:
-
-```verilog
-always @(i0 or i1 or sel)
-```
-
-Preferred Verilog:
-
-```verilog
-always @(*)
-```
-
-SystemVerilog:
-
-```verilog
-always_comb
-```
-
-For combinational logic, `always @(*)` is preferred when using Verilog.
-
-## 4. Practical Sensitivity-List Experiment
-
-### Testbench
-
-```verilog
-`timescale 1ns / 1ps
-
-module tb_ternary_operator_mux;
-
-reg i0, i1, sel;
-wire y;
-
-ternary_operator_mux uut (
-    .i0(i0),
-    .i1(i1),
-    .sel(sel),
-    .y(y)
-);
-
-initial begin
-
-    $dumpfile("tb_ternary_operator_mux.vcd");
-    $dumpvars(0, tb_ternary_operator_mux);
-
-    sel = 0;
-    i0 = 0;
-    i1 = 0;
-    #10;
-
-    i0 = 1;
-    #10;
-
-    sel = 1;
-    #10;
-
-    i1 = 1;
-    #10;
-
-    $finish;
-
-end
-
-endmodule
-```
-
-### Simulation
+**GLS is run using the synthesized netlist as the design under test (DUT)
+along with the gate-level (standard cell) models**, for example:
 
 ```bash
-iverilog ternary_operator_mux.v tb_ternary_operator_mux.v -o rtl_mux.out
-./rtl_mux.out
+iverilog ../my_lib/verilog_model/primitives.v \
+         ../my_lib/verilog_model/sky130_fd_sc_hd.v \
+         ternary_operator_mux_net.v \
+         tb_ternary_operator_mux.v
+./a.out
 gtkwave tb_ternary_operator_mux.vcd
 ```
 
-## 5. Synthesis Using Yosys
+- `primitives.v` and `sky130_fd_sc_hd.v` – Verilog behavioral models of the
+  standard cells (from the SKY130 library) needed to simulate the gates used
+  in the netlist.
+- `ternary_operator_mux_net.v` – the **synthesized netlist** (output of
+  Yosys), instead of the RTL file.
+- `tb_ternary_operator_mux.v` – the **same testbench** used for RTL
+  simulation.
 
-The RTL can be synthesized using Yosys.
+![alt text](<Screenshot 2026-08-24 184103.png>)
+> showing the `iverilog ... ternary_operator_mux_net.v tb_ternary_operator_mux.v`
 
-```
-yosys
+---
 
-read_liberty -lib ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+## 2. Synthesis–Simulation Mismatch
 
-read_verilog ternary_operator_mux.v
+A **synthesis-simulation mismatch** occurs when the RTL simulation waveform
+and the GLS (netlist) simulation waveform **do not match** for the same
+testbench/inputs.
 
-synth -top ternary_operator_mux
+Common causes of mismatch:
 
-abc -liberty ../my_lib/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+1. **Missing sensitivity list** in RTL (e.g., using `always @(sel)` instead of
+   `always @(*)`), which the simulator interprets literally but the
+   synthesizer treats as combinational logic sensitive to all inputs.
+2. **Blocking vs. non-blocking assignment misuse** inside `always` blocks
+   causing simulation mismatches due to ordering of statements.
+3. Use of **non-synthesizable constructs** (e.g., delays `#5`, initial blocks
+   with delays) that behave one way in simulation but are ignored by
+   synthesis.
 
-write_verilog -noattr ternary_operator_mux_netlist.v
+### Lab: `good_mux` (Ternary Operator MUX)
 
-exit
-```
-
-The synthesized design represents the hardware structure generated from the RTL.
-
-Conceptually:
-
-```
-           +-------+
-i0 ------->|       |
-i1 ------->|  MUX  |------> y
-sel ------>|       |
-           +-------+
-```
-
-## 6. Gate-Level Simulation
-
-The synthesized netlist can be simulated using the standard-cell Verilog models.
-
-### Compile
-
-```bash
-iverilog \
-../my_lib/verilog_model/primitives.v \
-../my_lib/verilog_model/sky130_fd_sc_hd.v \
-ternary_operator_mux_netlist.v \
-tb_ternary_operator_mux.v \
--o gls_mux.out
-```
-
-### Run
-
-```bash
-./gls_mux.out
-```
-
-### View Waveform
-
-```bash
-gtkwave tb_ternary_operator_mux.vcd
-```
-
-The RTL and GLS waveforms can then be compared.
-
-## 7. Blocking Assignment Execution Order
-
-Blocking assignment uses:
-
-```
-=
-```
-
-Consider:
+RTL code (`ternary_operator_mux.v`):
 
 ```verilog
-module blocking_caveat (
-    input a,
-    input b,
-    input c,
-    output reg d
-);
+module ternary_operator_mux (input i0, input i1, input sel, output y);
+  assign y = sel ? i1 : i0;
+endmodule
+```
 
+This is a clean, synthesizable 2:1 MUX described with a continuous
+assignment and the ternary operator.
+
+**Steps performed:**
+
+1. RTL simulation using `iverilog` + `tb_ternary_operator_mux.v` → view in
+   GTKWave.
+2. Synthesize using **Yosys** with the SKY130 standard cell library.
+3. View the synthesized gate-level schematic with `show` (Yosys → dot/xdot
+   viewer). The design maps to a single `sky130_fd_sc_hd__mux2_1` cell.
+4. Write out the gate-level netlist: `write_verilog -noattr ternary_operator_mux_net.v`.
+5. Run **GLS**: simulate the netlist (`ternary_operator_mux_net.v`) with the
+   same testbench and the SKY130 primitive/cell models.
+6. Compare the RTL-simulation waveform and the GLS waveform — for `good_mux`
+   they **match exactly**, confirming no synthesis-simulation mismatch.
+
+---
+
+## 3. Lab: `bad_mux` – Demonstrating a Synthesis-Simulation Mismatch
+
+RTL code (`bad_mux.v`):
+
+```verilog
+module bad_mux (input i0, input i1, input sel, output reg y);
+always @ (sel)
+begin
+  if (sel)
+    y <= i1;
+  else
+    y <= i0;
+end
+endmodule
+```
+
+**Why this is "bad":**
+
+- The sensitivity list only contains `sel` — it is **missing `i0` and `i1`**.
+- In **RTL simulation**, the simulator only re-evaluates the `always` block
+  when `sel` changes. So if `i0` or `i1` toggle while `sel` is constant, the
+  output `y` does **not** update — this is exactly what the simulator
+  executes, literally.
+- After **synthesis**, however, the tool infers a plain combinational MUX
+  (correctly sensitive to all three inputs, `i0`, `i1`, `sel`), because
+  synthesis tools treat `always @(...)` blocks as intent for a combinational
+  circuit and re-synthesize full combinational sensitivity regardless of the
+  incomplete sensitivity list.
+- Net result: **RTL simulation output ≠ GLS output** → classic
+  synthesis-simulation mismatch caused by an incomplete/incorrect
+  sensitivity list.
+
+**Fix:** always use `always @ (*)` for combinational logic so the simulator
+re-evaluates the block whenever *any* input changes.
+![alt text](<Screenshot 2026-08-24 201635.png>)
+> (side-by-side GTKWave windows comparing
+> `tb_bad_mux.vcd` RTL sim vs GLS waveform for `i0`, `i1`, `sel`, `y`) here to
+> visually show the mismatch — note how `y` glitches/differs between the
+> functional (behavioral) run and the gate-level run.
+
+---
+
+## 4. Blocking and Non-Blocking Assignments — Caveats
+
+### Recap: Blocking (`=`) vs Non-Blocking (`<=`)
+
+| | Blocking (`=`) | Non-Blocking (`<=`) |
+|---|---|---|
+| Execution | Sequential, statement-by-statement, **immediately** updates the LHS before moving to the next line | All RHS values are evaluated first (at the start of the time step), then **all LHS updates happen together** at the end of the time step |
+| Typical use | Combinational logic (`always @(*)`) | Sequential logic (`always @(posedge clk)`) |
+| Danger | Wrong statement **order** in combinational blocks can create unintended sequential-like behavior / use of stale values | Improper use in combinational blocks can infer unwanted latches |
+
+### Lab: `blocking_caveat`
+
+RTL code (`blocking_caveat.v`):
+
+```verilog
+module blocking_caveat (input a, input b, input c, output reg d);
 reg x;
-
-always @(*) begin
-    d = x & c;
-    x = a | b;
+always @ (*)
+begin
+  d = x & c;
+  x = a | b;
 end
-
 endmodule
 ```
 
-The simulator executes the statements sequentially.
+**The caveat:** Inside the `always @(*)` block, the statements are written in
+the **wrong order** for blocking assignment semantics:
 
-First:
+- Line 1: `d = x & c;` — uses the value of `x` **at that instant**.
+- Line 2: `x = a | b;` — updates `x` *after* `d` has already been computed.
 
-```verilog
-d = x & c;
-```
+Because blocking assignments execute top-to-bottom immediately, `d` is
+computed using the **previous (stale) value of `x`**, not the new value
+computed from the current `a` and `b`. This creates behavior similar to a
+**one-cycle-delayed / sequential circuit**, even though the block is meant to
+be purely combinational.
 
-Then:
+- Yosys, however, synthesizes this into pure combinational logic (a single
+  `sky130_fd_sc_hd__o21a_1` gate combining `a`, `b`, `c`), which
+  **correctly and immediately** reflects `a`, `b`, `c` on `d` in the
+  gate-level netlist.
+- The **RTL simulation** (which honors statement order / stale `x`) and the
+  **GLS** (pure combinational gate, no stale value) therefore **do not
+  match** — this is a synthesis-simulation mismatch caused entirely by
+  **wrong ordering of blocking statements**.
 
-```verilog
-x = a | b;
-```
-
-Therefore, `d` uses the previous value of `x`.
-
-The intended data flow is:
-
-```
-x = a | b
-d = x & c
-```
-
-which is equivalent to:
-
-```
-d = (a | b) & c
-```
-
-## 8. Correct Blocking Assignment Order
-
-A safer implementation is:
+**Fix:** Reorder the statements so dependent signals are computed first:
 
 ```verilog
-always @(*) begin
-    x = a | b;
-    d = x & c;
+always @ (*)
+begin
+  x = a | b;
+  d = x & c;
 end
 ```
 
-The data flow becomes:
+![alt text](<Screenshot 2026-08-24 203908.png>) 
+![alt text](<Screenshot 2026-08-24 203341.png>) 
+![alt text](<Screenshot 2026-08-24 203251.png>) 
+![alt text](<Screenshot 2026-08-24 202911.png>) 
+![alt text](<Screenshot 2026-08-24 202855.png>)
+> 
+> 
+> **GTKWave comparison** of RTL
+>    simulation vs GLS for `tb_blocking_caveat.vcd`, with the **mismatch
+>    region circled/annotated** (`a`, `b`, `c`, `d` signals)  this is the
+>    key screenshot that visually proves the synthesis-simulation mismatch
+>    caused by the blocking-assignment ordering caveat.
 
-```
-a,b
- ↓
-OR
- ↓
-x
- ↓
-AND ← c
- ↓
-d
-```
+---
 
-Another option is continuous assignment.
+## 5. Key Takeaways
+
+1. **GLS** validates that a synthesized netlist is functionally (and
+   optionally timing-) equivalent to the RTL, using the same testbench.
+2. **Synthesis-simulation mismatches** typically arise from:
+   - Missing/incomplete sensitivity lists (`bad_mux` example).
+   - Incorrect statement ordering with blocking assignments in
+     combinational always blocks (`blocking_caveat` example).
+   - Use of non-synthesizable constructs.
+3. **Best practices** to avoid mismatches:
+   - Always use `always @ (*)` for combinational logic blocks.
+   - Use **blocking (`=`)** assignments for combinational logic, and
+     **non-blocking (`<=`)** assignments for sequential logic.
+   - Be careful about the **order of blocking statements** — always compute
+     "helper"/intermediate signals before the signals that depend on them.
+   - Always run GLS after synthesis to catch these mismatches early.
+

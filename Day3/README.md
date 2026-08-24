@@ -212,4 +212,5 @@ endmodule
 ![alt text](image-10.png)
 The captured schematic shows the full, non-reduced counter_opt structure: three `$_DFF_PP0_` flip-flops (one per count bit) built from NOR, AND2, NAND2, NAND3, and a clock-inverter gate, with `q` tapped from bit 0 through a buffer. This view captures the counter *before* the unused-bit optimization is applied — useful as a "before" reference to compare against the reduced single-flip-flop version once `count[1]` and `count[2]` are trimmed away as unobservable.
 ![alt text](image-9.png)
+![alt text](image-11.png)
 ---
