@@ -96,7 +96,7 @@ Open the resulting `pre_synth_sim.vcd` in GTKWave and you should see `CLK` toggl
 ---
 
 ## Step Two: Synthesize with Yosys
-
+PS: Speed of Synthesis Depends on the computational power of your device
 Point Yosys at the RTL and the standard-cell library, then walk it through generic synthesis, flip-flop mapping, and technology mapping:
 
 | What | Command | Why |
@@ -108,6 +108,7 @@ Point Yosys at the RTL and the standard-cell library, then walk it through gener
 | Load DAC timing | `read_liberty -lib src/lib/avsddac.lib` | Tells Yosys how the DAC's pins behave |
 | Load SKY130 cells | `read_liberty -lib src/lib/sky130_fd_sc_hd__tt_025C_1v80.lib` | The gates, buffers, and flops everything gets mapped onto |
 | Run synthesis | `synth -top vsdbabysoc` | Elaborates and does technology-independent optimization |
+![alt text](<Screenshot 2026-08-30 224949.png>) ![alt text](<Screenshot 2026-08-30 224917.png>)
 | Map flops | `dfflibmap -liberty src/lib/sky130_fd_sc_hd__tt_025C_1v80.lib` | Swaps generic flip-flops for real SKY130 ones |
 | Optimize | `opt` | Trims redundant logic and folds constants |
 | Map gates | `abc -liberty src/lib/sky130_fd_sc_hd__tt_025C_1v80.lib` | ABC turns remaining logic into actual SKY130 cells |
@@ -116,9 +117,8 @@ Point Yosys at the RTL and the standard-cell library, then walk it through gener
 | Rename nets | `rename -enumerate` | Swaps Yosys's auto-generated names for readable ones |
 | Check the result | `stat` | Prints cell/wire counts and area so you can sanity-check the mapping |
 | Save it | `write_verilog -noattr baby_soc_net.v` | Writes the gate-level netlist; `-noattr` drops Yosys-only metadata |
-![alt text](image-2.png)
 `stat` at the end is your checkpoint — if the design mapped cleanly there should be no leftover generic cells, only SKY130 primitives.
-
+![alt text](<Screenshot 2026-08-30 225414.png>) ![alt text](<Screenshot 2026-08-30 225344.png>) ![alt text](<Screenshot 2026-08-30 225330.png>) ![alt text](<Screenshot 2026-08-30 225317.png>)
 ---
 
 ## A Library Bug That'll Trip You Up
