@@ -98,7 +98,7 @@ Open the resulting `pre_synth_sim.vcd` in GTKWave and you should see `CLK` toggl
 ## Step Two: Synthesize with Yosys
 PS: Speed of Synthesis Depends on the computational power of your device
 Point Yosys at the RTL and the standard-cell library, then walk it through generic synthesis, flip-flop mapping, and technology mapping:
-
+![alt text](image-5.png)
 | What | Command | Why |
 |---|---|---|
 | Load the top module | `read_verilog src/module/vsdbabysoc.v` | Brings in the module that ties PLL, core, and DAC together |
