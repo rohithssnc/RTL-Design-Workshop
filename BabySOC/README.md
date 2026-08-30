@@ -180,7 +180,7 @@ With both `.vcd` files opened at once in GTKWave, `CLK`, `reset`, `OUT`, and `RV
 ![RTL (top) vs GLS (bottom) GTKWave windows side by side]
 ![alt text](<Screenshot 2026-08-30 190059.png>)
 ![Zoomed-in comparison of RV_TO_DAC bus activity, RTL vs GLS]
-
+![alt text](image-4.png)
 They line up exactly, everywhere in the window — no divergence on any of the observed signals.
 
 A couple more captures from the same session, showing how `RV_TO_DAC` toggles alongside the DAC's analog `OUT` trend over time:
