@@ -136,13 +136,29 @@ Number of cells:        14876
    ...
 Chip area for module '\picorv32a': 147712.9184
 ```
-
+![alt text](<Screenshot 2026-09-06 175645.png>) ![alt text](<Screenshot 2026-09-06 175635.png>)
 This "chip area" number is the **first real, cell-based area estimate** of the design (as opposed to any RTL-level guess), and it directly determines how big the floorplan needs to be.
 
 After synthesis, OpenLANE also invokes **OpenSTA** to run a first static timing analysis pass on the *synthesized* netlist (pre-layout, wireload-model-based), so that gross timing problems are caught immediately rather than after placement/routing.
 
 ---
+Flip-Flop Ratio
 
+A useful sanity metric to pull straight out of the synthesis cell histogram is the flip-flop ratio — the percentage of the design's cells that are sequential (flip-flops) rather than combinational logic:
+
+Flip-Flop Ratio = (Flip-Flops / Total Cells) × 100
+
+For picorv32a, using the sky130_fd_sc_hd__dfxtp_2 count from the synthesis stats above:
+
+(1613 / 14876) × 100 = 10.84%
+
+This ratio is a quick indicator of how "sequential-heavy" a design is. A higher flip-flop ratio generally means:
+
+More area/timing budget spent on clock tree synthesis (more sinks to balance).
+Potentially tighter register-to-register paths to close in STA.
+A design that leans more toward pipelined/FSM-style logic rather than large blocks of pure combinational logic (e.g., arithmetic units), which would instead show up as more and/mux/o2bb2-type cells relative to flip-flops.
+
+It's also a handy cross-check figure when comparing different synthesis strategies or RTL coding styles on the same design — a big shift in this ratio after a code change usually means the retiming/register-balancing behavior of the design changed, not just its raw cell count.
 ## Stage 2: Floorplanning
 
 **Tool:** OpenROAD `init_fp` / custom Tcl scripts inside OpenLANE
@@ -184,7 +200,7 @@ ROW ROW_0 unithd 5520 10880 FS DO 1412 BY 1 STEP 460 0 ;
 ROW ROW_1 unithd 5520 13600 N  DO 1412 BY 1 STEP 460 0 ;
 ...
 ```
-
+![alt text](<Screenshot 2026-09-06 215748.png>)
 - `DIEAREA` gives the die's bottom-left and top-right corners in **database units** (1000 units = 1 micron here), so the die is roughly `660.7 µm × 671.4 µm`.
 - Each `ROW` statement defines one placement row: the site name (`unithd`), the (x,y) origin, the orientation (`FS` = flipped-south, `N` = north/normal — alternating so abutting rows share power rails), the number of sites (`DO 1412`), and the site pitch (`STEP 460 0`, i.e. 0.46 µm per site in X).
 - 39 rows (`ROW_0` … `ROW_38` and beyond) tile the entire core height.
@@ -242,7 +258,7 @@ delta HPWL                    2 %
 [INFO DPL-0022] HPWL after       766080.0 u
 [INFO DPL-0023] HPWL delta          -1.7 %
 ```
-
+![alt text](<Screenshot 2026-09-06 230314.png>)
 Key terms explained:
 
 - **Total / fixed / movable instances** — `total instances` is every standard cell in the design; `fixed instances` are cells that placement is *not* allowed to move (e.g., tap cells, decap cells, or IO-adjacent cells locked earlier in the flow); `movable area` is the silicon area available for placement to actually optimize the position of the remaining cells.
@@ -346,7 +362,7 @@ magic -T /path/to/sky130A/libs.tech/magic/sky130A.tech \
       lef read /path/to/openlane/designs/my_inv/runs/.../tmp/merged.lef \
       def read picorv32a...
 ```
-
+![alt text](<Screenshot 2026-09-06 223126.png>)
 ---
 
 ## Handling Antenna Rule Violations
