@@ -340,6 +340,89 @@ Zooming into one edge (drag-select a box in the ngspice plot window) isolates th
 ![Zoomed plot window popup overlapping the full waveform, isolating one rising/falling edge crossing near 6.0-6.5ns](images/15_waveform_with_zoom_popup.png)
 
 ![Close-up of the switching threshold crossing point, y-axis 2.50-2.70V, x-axis 2.00-2.50ns](images/16_zoomed_switching_threshold.png)
+RISE TIME AND FALL TIME CALCULATIONS
+(from ngspice cursor measurements — sky130_inv, VDD = 3.3 V)
+=====================================================================
+
+RAW CURSOR DATA (from ngspice console)
+---------------------------------------------------------------------
+Measurement 1:
+  x0 = 2.42169e-09 s,  y0 = 1.51648 V
+  x1 = 2.10843e-09 s,  y1 = 1.33516 V
+  dx = -3.13253e-10 s, dy = -0.181319 V
+  dy/dx = 5.78825e+08 V/s
+
+Measurement 2:
+  x0 = 1.84337e-09 s,  y0 = 1.41758 V
+  x1 = 2.27711e-09 s,  y1 = 1.26923 V
+  dx = 4.33735e-10 s,  dy = -0.148352 V
+  dy/dx = -3.42033e+08 V/s
+
+Measurement 3:
+  x0 = 2.44578e-09 s,  y0 = 2.36813 V
+  x1 = 2.42169e-09 s,  y1 = 2.36813 V
+  dx = -2.40964e-11 s, dy = 0 V
+  (Both points on flat/settled region -> dy = 0, not a valid transition)
+
+=====================================================================
+STEP 1: Reorder each pair by TIME (earlier point -> later point)
+so the sign of dV tells us whether it's a rise or a fall.
+=====================================================================
+
+Measurement 1 (reordered):
+  Earlier point : t = 2.10843 ns,  V = 1.33516 V
+  Later point   : t = 2.42169 ns,  V = 1.51648 V
+
+  delta_t = 2.42169 ns - 2.10843 ns = 0.31326 ns
+  delta_V = 1.51648 V  - 1.33516 V  = 0.18132 V   (positive -> RISING)
+
+  => This is a RISE, occurring over 0.313 ns
+
+Measurement 2 (reordered):
+  Earlier point : t = 1.84337 ns,  V = 1.41758 V
+  Later point   : t = 2.27711 ns,  V = 1.26923 V
+
+  delta_t = 2.27711 ns - 1.84337 ns = 0.43374 ns
+  delta_V = 1.26923 V  - 1.41758 V  = -0.14835 V  (negative -> FALLING)
+
+  => This is a FALL, occurring over 0.434 ns
+
+Measurement 3:
+  delta_V = 0  -> cursor points both landed on the flat top of the
+  waveform (already settled at logic HIGH). No transition is being
+  measured here; this pair cannot be used for rise/fall time.
+
+=====================================================================
+STEP 2: Results
+=====================================================================
+
+  RISE TIME  (Measurement 1) = 0.313 ns  = 313 ps
+  FALL TIME  (Measurement 2) = 0.434 ns  = 434 ps
+
+=====================================================================
+NOTES / CAVEATS
+=====================================================================
+1. Measurement 3 gives dy = 0 and is therefore NOT a rise/fall
+   measurement -- both cursor placements sat on the settled HIGH
+   plateau of the waveform.
+
+2. Standard rise/fall time definitions use 10%-90% (or 20%-80%) of
+   the full voltage swing. With VDD = 3.3 V:
+     10% level = 0.33 V
+     90% level = 2.97 V
+   The cursor points above (~1.3-1.5 V) sit near the 40-46% region,
+   not the standard 10/90% points. If your cursors were intentionally
+   placed at those percentage levels, the 0.313 ns / 0.434 ns values
+   above ARE your rise/fall time. If you want the strict industry-
+   standard 10-90% number, re-place the cursors at 0.33 V and 2.97 V
+   on each edge and read the new delta_t directly -- do not extrapolate
+   the local slope (dy/dx) across the full swing, since the edge is
+   not perfectly linear and this gives non-physical results (several
+   ns, longer than the clock period itself).
+
+3. Sanity check: with a ~2 ns period, transition times of 313-434 ps
+   are 15-22% of the period, consistent with the near-vertical edges
+   seen in the waveform plot.
 
 **Theory — Switching Threshold (Vm):** Vm is defined as the input voltage at which `Vin = Vout` on the transfer characteristic (or, on a transient plot, the output voltage level the falling/rising edges are centered around as `a` crosses its own transition). It's a key inverter figure of merit — it tells you how balanced the pull-up (PMOS) and pull-down (NMOS) drive strengths are. A Vm close to `VDD/2` (≈1.65 V here) indicates a well-balanced inverter; a Vm skewed toward VDD or GND indicates the PMOS or NMOS is comparatively stronger.
 
