@@ -1,0 +1,15 @@
+VSDBabySoC OpenROAD README continuation package
+
+README.md
+  Continuation of the earlier README: OpenROAD visual evidence, synthesis theory/statistics, post-synthesis STA theory and results, post-route STA theory and results, and the project checklist.
+
+images/
+  Original OpenROAD screenshots plus selected figures extracted from the supplied STA reports.
+
+reports/Post_Synthesis_STA_Report_11ns_16_Corners.docx
+  Complete supplied multi-corner post-synthesis STA report (11 ns clock target).
+
+reports/Post_Route_STA_Report_12ns_16_Corners.docx
+  Complete supplied multi-corner post-route STA report (12 ns clock target).
+
+Note: The 11 ns post-synthesis STA and 12 ns post-route STA results are from different stages/constraints. The README also calls out the placement-option error and global-routing congestion visible in the supplied screenshots; confirm that those errors were resolved in the run corresponding to the post-route report before claiming final sign-off.
