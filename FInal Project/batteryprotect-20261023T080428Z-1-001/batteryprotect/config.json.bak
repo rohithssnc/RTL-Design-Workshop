@@ -1,0 +1,17 @@
+{
+  "DESIGN_NAME": "battery_protect",
+  "VERILOG_FILES": "dir::src/battery_protect.v",
+  "CLOCK_PORT": "clk",
+  "CLOCK_PERIOD": 10,
+  "BASE_SDC_FILE": "dir::src/battery_protect.sdc",
+
+  "FP_SIZING": "absolute",
+  "DIE_AREA": "0 0 100 100",
+  "CORE_AREA": "5 5 95 95",
+  "PL_TARGET_DENSITY": 0.5,
+
+  "FP_PDN_VPITCH": 40,
+  "FP_PDN_HPITCH": 40,
+  "FP_PDN_VOFFSET": 10,
+  "FP_PDN_HOFFSET": 10
+}

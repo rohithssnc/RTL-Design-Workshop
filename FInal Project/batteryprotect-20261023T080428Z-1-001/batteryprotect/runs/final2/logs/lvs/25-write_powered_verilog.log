@@ -1,0 +1,19 @@
+Notice 0: Reading LEF file:  /openLANE_flow/designs/batteryprotect/runs/final2/tmp/merged.lef
+Notice 0:     Created 13 technology layers
+Notice 0:     Created 25 technology vias
+Notice 0:     Created 440 library cells
+Notice 0: Finished LEF file:  /openLANE_flow/designs/batteryprotect/runs/final2/tmp/merged.lef
+Notice 0: 
+Reading DEF file: /openLANE_flow/designs/batteryprotect/runs/final2/results/routing/battery_protect.def
+Notice 0: Design: battery_protect
+Notice 0:     Created 24 pins.
+Notice 0:     Created 954 components and 4064 component-terminals.
+Notice 0:     Created 2 special nets and 0 connections.
+Notice 0:     Created 149 nets and 458 connections.
+Notice 0: Finished DEF file: /openLANE_flow/designs/batteryprotect/runs/final2/results/routing/battery_protect.def
+Top-level design name: battery_protect
+Default power net:  VPWR
+Default ground net: VGND
+Found a total of 1 power ports.
+Found a total of 1 ground ports.
+Modified power connections of 954 cells (Remaining: 0 ).

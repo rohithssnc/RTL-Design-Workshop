@@ -1,0 +1,128 @@
+OpenSTA 2.3.0 38b40303a8 Copyright (c) 2019, Parallax Software, Inc.
+License GPLv3: GNU GPL version 3 <http://gnu.org/licenses/gpl.html>
+
+This is free software, and you are free to change and redistribute it
+under certain conditions; type `show_copying' for details. 
+This program comes with ABSOLUTELY NO WARRANTY; for details type `show_warranty'.
+Warning: /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__ff_n40C_1v95.lib line 31, default_operating_condition ff_n40C_1v95 not found.
+Warning: /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__ss_100C_1v60.lib line 32, default_operating_condition ss_100C_1v60 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 168, instance output10:X not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 172, net output10 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 175, net output10 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 175, net output10 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 176, net output10 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 181, instance input1:A not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 186, net input1 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 190, net input1 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 190, net input1 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 191, net input1 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 462, instance input2:A not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 469, net input2 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 474, net input2 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 476, net input2 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 476, net input2 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 481, instance input3:A not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 486, net input3 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 491, net input3 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 491, net input3 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 492, net input3 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 498, instance output11:X not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 502, net output11 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 505, net output11 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 505, net output11 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 506, net output11 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 511, instance output12:X not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 515, net output12 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 518, net output12 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 518, net output12 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 519, net output12 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 524, instance output13:X not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 529, net output13 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 531, net output13 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 533, net output13 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 533, net output13 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 539, instance output14:X not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 544, net output14 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 549, net output14 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 549, net output14 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 550, net output14 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 555, instance output15:X not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 560, net output15 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 563, net output15 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 565, net output15 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 565, net output15 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 570, instance input4:A not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 576, net input4 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 581, net input4 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 581, net input4 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 582, net input4 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 587, instance input5:A not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 590, net input5 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 594, net input5 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 596, net input5 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 596, net input5 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 602, instance input6:A not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 608, net input6 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 614, net input6 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 616, net input6 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 616, net input6 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 621, instance input7:A not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 626, net input7 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 629, net input7 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 631, net input7 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 631, net input7 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 636, instance input8:A not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 641, net input8 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 643, net input8 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 645, net input8 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 645, net input8 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 651, instance input9:A not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 656, net input9 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 661, net input9 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 661, net input9 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 662, net input9 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3606, net net1 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3608, instance input1:X not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3624, net net2 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3626, instance input2:X not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3676, net net3 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3678, instance input3:X not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3736, net net4 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3738, instance input4:X not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3771, net net5 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3773, instance input5:X not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3820, net net6 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3822, instance input6:X not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3846, net net7 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3848, instance repeater16:A not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3849, instance input7:X not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3926, net net8 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3928, instance input8:X not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3942, net net9 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3944, instance input9:X not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3967, net net10 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3969, instance output10:A not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3985, net net11 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 3987, instance output11:A not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 4003, net net12 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 4005, instance output12:A not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 4038, net net13 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 4040, instance output13:A not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 4071, net net14 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 4073, instance output14:A not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 4102, net net15 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 4104, instance output15:A not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 4139, net net16 not found.
+Warning: /openLANE_flow/designs/batteryprotect/runs/retry/results/routing/battery_protect.spef line 4159, instance repeater16:X not found.
+# battery_protect.sdc - constraints for all 16 signal pins
+# inputs : clk, rst_n, ov, uv, occ, ocd, tick, clear, dbn_sel[1:0]
+# outputs: chg_en, dsg_en, fault[3:0]
+current_design battery_protect
+set clk_period 10.0
+create_clock -name clk -period $clk_period [get_ports clk]
+set in_delay  [expr {$clk_period * 0.2}]
+set out_delay [expr {$clk_period * 0.2}]
+set_input_delay  $in_delay  -clock clk [get_ports {rst_n ov uv occ ocd tick clear dbn_sel[*]}]
+set_output_delay $out_delay -clock clk [get_ports {chg_en dsg_en fault[*]}]
+tns 0.00
+wns 0.00

@@ -1,0 +1,10 @@
+
+27. Executing CHECK pass (checking for obvious problems).
+checking module battery_protect..
+Warning: Wire battery_protect.\fault [3] is used but has no driver.
+Warning: Wire battery_protect.\fault [2] is used but has no driver.
+Warning: Wire battery_protect.\fault [1] is used but has no driver.
+Warning: Wire battery_protect.\fault [0] is used but has no driver.
+Warning: Wire battery_protect.\dsg_en is used but has no driver.
+Warning: Wire battery_protect.\chg_en is used but has no driver.
+found and reported 6 problems.
