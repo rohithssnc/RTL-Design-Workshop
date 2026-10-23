@@ -1,7 +1,0 @@
-Using Techfile: /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/klayout/sky130A.lyt
-Using layout file: /openLANE_flow/designs/batteryprotect/runs/final2/results/klayout/battery_protect.xor.gds
-[INFO] Reading tech file: /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/klayout/sky130A.lyt
-[INFO] Reading Layout file: /openLANE_flow/designs/batteryprotect/runs/final2/results/klayout/battery_protect.xor.gds
-Warning: Record length larger than 0x8000 encountered: interpreting as unsigned (position=1018982, record number=69789, cell=XOR)
-[INFO] Writing out PNG screenshot '/openLANE_flow/designs/batteryprotect/runs/final2/results/klayout/battery_protect.xor.gds.png'
-Done
